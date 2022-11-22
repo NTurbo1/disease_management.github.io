@@ -5,23 +5,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Specialize")
-public class Specialize {
-    private Integer id;
+@Table(name="PublicServant")
+public class PublicServant {
     @Id
     private String email;
-
-    public Integer getId() {
-        return id;
-    }
+    private String department;
     public String getEmail() {
         return email;
     }
-    public void setId(Integer id) {
-        this.id = id;
-    }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     
