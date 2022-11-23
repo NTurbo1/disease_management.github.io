@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.turbo.disease_management.Dto.DoctorDto;
 import com.turbo.disease_management.Dto.PublicServantDto;
@@ -71,11 +72,13 @@ public class AuthController {
         //model.addAttribute("specialize", specialize);
         return "register";
     }
-    
-    @GetMapping("/register/doctor")
-    public String doctorRegistration(@Valid @ModelAttribute("user") UserDto user,
-                                     BindingResult result,
-                                     Model model) {
+
+    @GetMapping("/register/occupation")
+    public String redirectBasedOnOccupation(@Valid @ModelAttribute("user") UserDto user,
+                                            BindingResult result,
+                                            Model model,
+                                            @RequestParam(value="occupation", required = false)
+                                            String occupation) {
         User existingUser = userService.findUserByEmail(user.getEmail());
 
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
@@ -88,14 +91,51 @@ public class AuthController {
             return "/register";
         }
 
+        if (occupation.equals("doctor")) {
+            System.out.println("Heading to /register/doctor");
+            System.out.println("USER PASSWORD " + user.getPassword());
+            return "redirect:/register/doctor?name=" + user.getName() +
+                                              "&surname=" + user.getSurname() +
+                                              "&email=" + user.getEmail() +
+                                              "&phone=" + user.getPhone() +
+                                              "&cname=" + user.getCname() +
+                                              "&salary=" + user.getSalary() +
+                                              "&password=" + user.getPassword();
+        } else {
+            return "redirect:/register/publicServant?name=" + user.getName() +
+                                              "&surname=" + user.getSurname() +
+                                              "&email=" + user.getEmail() +
+                                              "&phone=" + user.getPhone() +
+                                              "&cname=" + user.getCname() +
+                                              "&salary=" + user.getSalary() +
+                                              "&password=" + user.getPassword();
+        }
+    }
+    
+    @GetMapping("/register/doctor")
+    public String doctorRegistration(@RequestParam(value="name", required=false) String name,
+                                     @RequestParam(value="surname", required=false) String surname,
+                                     @RequestParam(value="email", required=false) String email,
+                                     @RequestParam(value="phone", required=false) String phone,
+                                     @RequestParam(value="cname", required=false) String cname,
+                                     @RequestParam(value="salary", required=false) BigInteger salary,
+                                     @RequestParam(value="password", required=false) String password, 
+                                     Model model) {
+
         SpecializeDto specialize = new SpecializeDto();
         DoctorDto doctor = new DoctorDto();
+        UserDto user = new UserDto();
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setCname(cname);
+        user.setSalary(salary);
+        user.setPassword(password);
+
+        System.out.println("In /register/doctor");
         model.addAttribute("doctor", doctor);
         model.addAttribute("specialize", specialize);
-        System.out.println("USER PASSORD BEFORE SENDING TO register_doctor page " +
-                            user.getPassword());
-        System.out.println("USER NAME BEFORE SENDING TO register_doctor page " +
-                            user.getName());
         model.addAttribute("user", user);
         return "register_doctor";
     }
@@ -119,12 +159,6 @@ public class AuthController {
         user.setCname(cname);
         user.setSalary(salary);
         user.setPassword(password);
-        System.out.println("WE ARE IN SAVEDOCTOR CONTROLLER");
-
-        System.out.println("DOCTOR'S EMAIL " + doctor.getEmail());
-        System.out.println("SPECIALIZE EMAIL " + specialize.getEmail());
-        System.out.println("USER PASSWORD " + user.getPassword());
-        System.out.println("USER NAME " + user.getName());
 
         doctor.setEmail(user.getEmail());
         specialize.setEmail(user.getEmail());
@@ -135,34 +169,53 @@ public class AuthController {
     }
 
     @GetMapping("/register/publicServant")
-    public String publicServantRegistration(@Valid @ModelAttribute("user") UserDto user,
-                                     BindingResult result,
-                                     Model model) {
-        User existingUser = userService.findUserByEmail(user.getEmail());
-
-        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
-            result.rejectValue("email", null,
-                    "There is already an account registered with the same email");
-        }
-
-        if(result.hasErrors()){
-            model.addAttribute("user", user);
-            return "/register";
-        }
+    public String publicServantRegistration(@RequestParam(value="name", required=false) String name,
+                                            @RequestParam(value="surname", required=false) String surname,
+                                            @RequestParam(value="email", required=false) String email,
+                                            @RequestParam(value="phone", required=false) String phone,
+                                            @RequestParam(value="cname", required=false) String cname,
+                                            @RequestParam(value="salary", required=false) BigInteger salary,
+                                            @RequestParam(value="password", required=false) String password,
+                                            Model model) {
 
         PublicServant publicServant = new PublicServant();
+        UserDto user = new UserDto();
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setCname(cname);
+        user.setSalary(salary);
+        user.setPassword(password);
+        
         model.addAttribute("publicServant", publicServant);
         model.addAttribute("user", user);
         return "register_public_servant";
     }
     
     @PostMapping("/register/publicServant/save")
-    public String savePublicServant(@Valid @ModelAttribute("user") UserDto user,
-                                    @ModelAttribute("publicServant") PublicServantDto publicServant){
+    public String savePublicServant(@ModelAttribute("publicServant") PublicServantDto publicServant,
+                                    @RequestParam(value="name", required=false) String name,
+                                    @RequestParam(value="surname", required=false) String surname,
+                                    @RequestParam(value="email", required=false) String email,
+                                    @RequestParam(value="phone", required=false) String phone,
+                                    @RequestParam(value="cname", required=false) String cname,
+                                    @RequestParam(value="salary", required=false) BigInteger salary,
+                                    @RequestParam(value="password", required=false) String password){
+
+        UserDto user = new UserDto();
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setCname(cname);
+        user.setSalary(salary);
+        user.setPassword(password);
+        publicServant.setEmail(email);
 
         userService.saveUser(user);
         publicServantService.savePublicServant(publicServant);
-        return "register?success";
+        return "redirect:/register?success";
     }
 
     // handler method to handle list of users

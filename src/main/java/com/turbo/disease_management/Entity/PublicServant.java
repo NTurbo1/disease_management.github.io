@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PublicServant")
+@Table(name="Public_Servant")
 public class PublicServant {
     @Id
     private String email;

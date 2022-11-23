@@ -20,6 +20,8 @@ public class UserDto {
 	private String cname;
 	@NotEmpty(message = "Password should not be empty")
     private String password;
+	@NotEmpty
+	private String occupation;
     
     
 	public String getEmail() {
@@ -63,6 +65,12 @@ public class UserDto {
 	}
 	public void setCname(String cname) {
 		this.cname = cname;
+	}
+	public String getOccupation() {
+		return occupation;
+	}
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
 	}
     
     

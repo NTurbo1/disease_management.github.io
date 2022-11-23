@@ -37,7 +37,7 @@
                         <form
                             method="post"
                             role="form"
-                            th:action="@{register/publicServant/save}"
+                            th:action="@{/register/publicServant/save(name=${user.name}, surname=${user.surname}, email=${user.email}, phone=${user.phone}, cname=${user.cname}, salary=${user.salary}, password=${user.password})}"
                         >
                 
                             <!-- <div class="form-group mb-3">
@@ -61,16 +61,16 @@
                                         id="department"
                                         name="department"
                                         th:value="${publicServant.department}">
-                                    <option th:value='Outpatient department'>Outpatient department</option>
-                                    <option th:value='Inpatient Service'>Inpatient Service</option>
-                                    <option th:value='Medical Department'>Medical Department</option>
-                                    <option th:value='Nursing Department'>Nursing Department</option>
-                                    <option th:value='Paramedical department'>Paramedical department</option>
-                                    <option th:value='Physical Medicine and Rehabilitation department'>Physical Medicine and Rehabilitation department</option>
-                                    <option th:value='Operation Theatre Complex department'>Operation Theatre Complex department</option>
-                                    <option th:value='Pharmacy department'>Pharmacy department</option>
-                                    <option th:value='Radiology department'>Radiology department</option>
-                                    <option th:value='Dietary department''>Dietary department</option>
+                                    <option th:value="'Outpatient department'">Outpatient department</option>
+                                    <option th:value="'Inpatient Service'">Inpatient Service</option>
+                                    <option th:value="'Medical Department'">Medical Department</option>
+                                    <option th:value="'Nursing Department'">Nursing Department</option>
+                                    <option th:value="'Paramedical department'">Paramedical department</option>
+                                    <option th:value="'Physical Medicine and Rehabilitation department'">Physical Medicine and Rehabilitation department</option>
+                                    <option th:value="'Operation Theatre Complex department'">Operation Theatre Complex department</option>
+                                    <option th:value="'Pharmacy department'">Pharmacy department</option>
+                                    <option th:value="'Radiology department'">Radiology department</option>
+                                    <option th:value="'Dietary department'">Dietary department</option>
                                 </select>
                                 <p th:errors = "${publicServant.department}" class="text-danger"
                                     th:if="${#fields.hasErrors('publicServant.department')}"></p>
