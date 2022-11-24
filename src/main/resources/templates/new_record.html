@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+    <head>
+        <meta charset="UTF-8">
+        <title>Disease Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/records}">Records</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br /><br /><br />
+        <div class="container">
+            <div class="row col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">New Record</h2>
+                    </div>
+                    <div class="card-body">
+                        <form
+                            method="post"
+                            role="form"
+                            th:action="@{/records/saveRecord}"
+                        >
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Country</label>
+                                <select
+                                        class="form-control"
+                                        id="cname"
+                                        name="cname"
+                                        th:value="${record.cname}">
+                                    <option th:value='USA'>USA</option>
+                                    <option th:value='Argentina'>Argentina</option>
+                                    <option th:value='Brazil'>Brazil</option>
+                                    <option th:value='Nigeria'>Nigeria</option>
+                                    <option th:value='Nepal'>Nepal</option>
+                                    <option th:value='Kazakhstan'>Kazakhstan</option>
+                                    <option th:value='France'>France</option>
+                                    <option th:value='China'>China</option>
+                                    <option th:value='India'>India</option>
+                                    <option th:value='Turkey'>Turkey</option>
+                                    <option th:value='Egypt'>Egypt</option>
+                                    <option th:value='California'>California</option>
+                                    <option th:value='Greece'>Greece</option>
+                                    <option th:value='Germany'>Germany</option>
+                                    <option th:value='Vienna'>Vienna</option>
+                                    <option th:value='England'>England</option>
+                                </select>
+                                <p th:errors = "${record.cname}" class="text-danger"
+                                    th:if="${#fields.hasErrors('record.cname')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Email</label>
+                                <input
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter email address"
+                                        th:value="${record.email}"
+                                        type="email"
+                                />
+                                <p th:errors = "${record.email}" class="text-danger"
+                                    th:if="${#fields.hasErrors('record.email')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Disease code</label>
+                                <input
+                                        class="form-control"
+                                        id="diseaseCode"
+                                        name="diseaseCode"
+                                        placeholder="Enter disease code"
+                                        th:value="${record.diseaseCode}"
+                                        type="text"
+                                />
+                                <p th:errors = "${record.diseaseCode}" class="text-danger"
+                                    th:if="${#fields.hasErrors('record.diseaseCode')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Total patients</label>
+                                <input
+                                        class="form-control"
+                                        id="total_patients"
+                                        name="total_patients"
+                                        placeholder="Enter the number of total patients"
+                                        th:value="${record.total_patients}"
+                                        type="number"
+                                />
+                                <p th:errors = "${record.total_patients}" class="text-danger"
+                                    th:if="${#fields.hasErrors('record.total_patients')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Total deaths</label>
+                                <input
+                                        class="form-control"
+                                        id="total_deaths"
+                                        name="total_deaths"
+                                        placeholder="Enter the number of total deaths"
+                                        th:value="${record.total_deaths}"
+                                        type="number"
+                                />
+                                <p th:errors = "${record.total_deaths}" class="text-danger"
+                                    th:if="${#fields.hasErrors('record.total_deaths')}"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

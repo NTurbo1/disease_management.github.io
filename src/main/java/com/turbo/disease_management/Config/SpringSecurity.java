@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -32,12 +33,15 @@ public class SpringSecurity {
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/diseases").hasRole("DOCTOR")
+                .antMatchers("/records").hasRole("PUBLICSERVANT")
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                //.defaultSuccessUrl("/afterLogin")
+                                .successHandler(myAuthenticationSuccessHandler())
                                 .permitAll()
                 ).logout(
                         logout -> logout
@@ -53,6 +57,11 @@ public class SpringSecurity {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleUrlAuthenticationSuccessHandler();
     }
 }
 

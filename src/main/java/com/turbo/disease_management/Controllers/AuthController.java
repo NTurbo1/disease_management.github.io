@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import com.turbo.disease_management.Dto.DiseaseDto;
 import com.turbo.disease_management.Dto.DoctorDto;
 import com.turbo.disease_management.Dto.PublicServantDto;
+import com.turbo.disease_management.Dto.RecordDto;
 import com.turbo.disease_management.Dto.SpecializeDto;
 import com.turbo.disease_management.Dto.UserDto;
 import com.turbo.disease_management.Entity.PublicServant;
 import com.turbo.disease_management.Entity.User;
+import com.turbo.disease_management.Service.DiseaseService;
 import com.turbo.disease_management.Service.DoctorService;
 import com.turbo.disease_management.Service.PublicServantService;
+import com.turbo.disease_management.Service.RecordService;
 import com.turbo.disease_management.Service.SpecializeService;
 import com.turbo.disease_management.Service.UserService;
 
@@ -40,6 +42,12 @@ public class AuthController {
     @Autowired
     private SpecializeService specializeService;
 
+    @Autowired
+    private DiseaseService diseaseService;
+
+    @Autowired
+    private RecordService recordService;
+
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -55,21 +63,43 @@ public class AuthController {
     public String login(){
         return "login";
     }
+
+    // handler method to handle list of users
+    @GetMapping("/users")
+    public String users(Model model){
+        List<UserDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
+    @GetMapping("/diseases")
+    public String diseases(Model model) {
+        List<DiseaseDto> diseases = diseaseService.findAllDiseases();
+        System.out.println("USERS BEFORE GETTING DISPLAYED");
+        for (DiseaseDto d : diseases) {
+            System.out.println(d.toString());
+        }
+        model.addAttribute("diseases", diseases);
+        return "diseases";
+    }
+
+    @GetMapping("/records")
+    public String records(Model model) {
+        List<RecordDto> records = recordService.findAllRecords();
+        System.out.println("RECORDS BEFORE GETTING DISPLAYED");
+        for (RecordDto r : records) {
+            System.out.println(r.toString());
+        }
+        model.addAttribute("records", records);
+        return "records";
+    }
     
     // handler method to handle user registration form request
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         // create model object to store form data
         UserDto user = new UserDto();
-        // Doctor doctor = new Doctor();
-        //String occupation = "";
-        // PublicServant publicServant = new PublicServant();
-        //Specialize specialize = new Specialize();
         model.addAttribute("user", user);
-        // model.addAttribute("doctor", doctor);
-        //model.addAttribute("occupation", occupation);
-        // model.addAttribute("publicServant", publicServant);
-        //model.addAttribute("specialize", specialize);
         return "register";
     }
 
@@ -100,7 +130,8 @@ public class AuthController {
                                               "&phone=" + user.getPhone() +
                                               "&cname=" + user.getCname() +
                                               "&salary=" + user.getSalary() +
-                                              "&password=" + user.getPassword();
+                                              "&password=" + user.getPassword() +
+                                              "&occupation=" + occupation;
         } else {
             return "redirect:/register/publicServant?name=" + user.getName() +
                                               "&surname=" + user.getSurname() +
@@ -108,7 +139,8 @@ public class AuthController {
                                               "&phone=" + user.getPhone() +
                                               "&cname=" + user.getCname() +
                                               "&salary=" + user.getSalary() +
-                                              "&password=" + user.getPassword();
+                                              "&password=" + user.getPassword() +
+                                              "&occupation=" + occupation;
         }
     }
     
@@ -119,7 +151,8 @@ public class AuthController {
                                      @RequestParam(value="phone", required=false) String phone,
                                      @RequestParam(value="cname", required=false) String cname,
                                      @RequestParam(value="salary", required=false) BigInteger salary,
-                                     @RequestParam(value="password", required=false) String password, 
+                                     @RequestParam(value="password", required=false) String password,
+                                     @RequestParam(value="occupation", required=false) String occupation, 
                                      Model model) {
 
         SpecializeDto specialize = new SpecializeDto();
@@ -132,6 +165,7 @@ public class AuthController {
         user.setCname(cname);
         user.setSalary(salary);
         user.setPassword(password);
+        user.setOccupation(occupation);
 
         System.out.println("In /register/doctor");
         model.addAttribute("doctor", doctor);
@@ -149,7 +183,8 @@ public class AuthController {
                              @RequestParam(value="phone", required=false) String phone,
                              @RequestParam(value="cname", required=false) String cname,
                              @RequestParam(value="salary", required=false) BigInteger salary,
-                             @RequestParam(value="password", required=false) String password){
+                             @RequestParam(value="password", required=false) String password,
+                             @RequestParam(value="occupation", required=false) String occupation){
 
         UserDto user = new UserDto();
         user.setName(name);
@@ -159,6 +194,7 @@ public class AuthController {
         user.setCname(cname);
         user.setSalary(salary);
         user.setPassword(password);
+        user.setOccupation(occupation);
 
         doctor.setEmail(user.getEmail());
         specialize.setEmail(user.getEmail());
@@ -176,6 +212,7 @@ public class AuthController {
                                             @RequestParam(value="cname", required=false) String cname,
                                             @RequestParam(value="salary", required=false) BigInteger salary,
                                             @RequestParam(value="password", required=false) String password,
+                                            @RequestParam(value="occupation", required=false) String occupation,
                                             Model model) {
 
         PublicServant publicServant = new PublicServant();
@@ -187,6 +224,7 @@ public class AuthController {
         user.setCname(cname);
         user.setSalary(salary);
         user.setPassword(password);
+        user.setOccupation(occupation);
         
         model.addAttribute("publicServant", publicServant);
         model.addAttribute("user", user);
@@ -201,7 +239,8 @@ public class AuthController {
                                     @RequestParam(value="phone", required=false) String phone,
                                     @RequestParam(value="cname", required=false) String cname,
                                     @RequestParam(value="salary", required=false) BigInteger salary,
-                                    @RequestParam(value="password", required=false) String password){
+                                    @RequestParam(value="password", required=false) String password,
+                                    @RequestParam(value="occupation", required=false) String occupation){
 
         UserDto user = new UserDto();
         user.setName(name);
@@ -211,19 +250,12 @@ public class AuthController {
         user.setCname(cname);
         user.setSalary(salary);
         user.setPassword(password);
+        user.setOccupation(occupation);
         publicServant.setEmail(email);
 
         userService.saveUser(user);
         publicServantService.savePublicServant(publicServant);
         return "redirect:/register?success";
-    }
-
-    // handler method to handle list of users
-    @GetMapping("/users")
-    public String users(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
     }
 
 }

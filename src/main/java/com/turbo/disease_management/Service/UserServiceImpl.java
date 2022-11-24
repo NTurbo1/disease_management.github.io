@@ -20,8 +20,6 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
-    //private PublicServantRepository publicServantRepository;
-    //private SpecializeRepository specializeRepository;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
@@ -42,30 +40,20 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setCname(userDto.getCname());
         user.setSalary(userDto.getSalary());
-        
-        // if (userDto.getOccupation().equals("doctor")) {
-        // 	Doctor doctor = new Doctor();
-        // 	doctor.setDegree(userDto.getDegree());
-        // 	doctor.setEmail(userDto.getEmail());
-        // 	this.doctorRepository.save(doctor);
-        	
-        // 	Specialize specialize = new Specialize();
-        // 	specialize.setEmail(userDto.getEmail());
-        // 	specialize.setId(userDto.getSpecialize());
-        // 	this.specializeRepository.save(specialize);
-        	
-        // } else {
-        // 	PublicServant publicServant = new PublicServant();
-        // 	publicServant.setDepartment(userDto.getDepartment());
-        // 	publicServant.setEmail(userDto.getEmail());
-        // 	this.publicServantRepository.save(publicServant);
-        // }
-        
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
+        Role role = null;
+        if (userDto.getOccupation().equals("doctor")) {
+            role = roleRepository.findByName("ROLE_DOCTOR");
+            if(role == null){
+                role = checkRoleExist("ROLE_DOCTOR");
+            }
+        } else {
+            role = roleRepository.findByName("ROLE_PUBLICSERVANT");
+            if(role == null){
+                role = checkRoleExist("ROLE_PUBLICSERVANT");
+            }
         }
+
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
@@ -95,9 +83,9 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role checkRoleExist(){
+    private Role checkRoleExist(String roleName){
         Role role = new Role();
-        role.setName("ROLE_ADMIN");
+        role.setName(roleName);
         return roleRepository.save(role);
     }
 	

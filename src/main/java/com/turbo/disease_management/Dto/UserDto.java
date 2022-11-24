@@ -23,7 +23,6 @@ public class UserDto {
 	@NotEmpty
 	private String occupation;
     
-    
 	public String getEmail() {
 		return email;
 	}
@@ -73,6 +72,11 @@ public class UserDto {
 		this.occupation = occupation;
 	}
     
+	@Override
+	public String toString() {
+		return "UserDto [email=" + email + ", name=" + name + ", surname=" + surname + ", salary=" + salary + ", phone="
+				+ phone + ", cname=" + cname + ", password=" + password + ", occupation=" + occupation + "]";
+	}
     
 }
 
