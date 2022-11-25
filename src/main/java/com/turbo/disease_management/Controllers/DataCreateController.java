@@ -100,25 +100,36 @@ public class DataCreateController {
 
     @GetMapping("/discoveries/newDiscovery")
     public String newDiscoveryForm(Model model) {
-        List<DiseaseDto> diseases = diseaseService.findAllDiseases();
+        DiseaseDto disease = new DiseaseDto();
         DiscoverDto discovery = new DiscoverDto();
         model.addAttribute("discovery", discovery);
-        model.addAttribute("diseases", diseases);
+        model.addAttribute("disease", disease);
 
         return "new_discovery";
     }
 
     @PostMapping("/discoveries/saveDiscovery")
     public String saveDiscovery(@Valid @ModelAttribute(value = "discovery") DiscoverDto discovery,
-                                BindingResult result, Model model) {
+                                BindingResult discoveryResult, 
+                                @Valid @ModelAttribute(value = "disease") DiseaseDto disease,
+                                BindingResult diseaseResult,
+                                Model model) {
 
-        if (result.hasErrors()){
-            List<DiseaseDto> diseases = diseaseService.findAllDiseases();
-            model.addAttribute("diseases", diseases);
+        discovery.setDiseaseCode(disease.getDiseaseCode());
+        
+        if (diseaseResult.hasErrors()){
+            model.addAttribute("disease", disease);
             model.addAttribute("discovery", discovery);
             return "new_discovery";
         }
 
+        if (discoveryResult.hasErrors()){
+            model.addAttribute("disease", disease);
+            model.addAttribute("discovery", discovery);
+            return "new_discovery";
+        }
+
+        diseaseService.saveDisease(disease);
         discoverService.saveDiscovery(discovery);
         return "redirect:/discoveries";
     }

@@ -73,6 +73,69 @@
                             role="form"
                             th:action="@{/discoveries/saveDiscovery}"
                         >
+                            <div class="form-group mb-3 text-white">
+                                <label class="form-label">Disease code</label>
+                                <input
+                                        class="form-control"
+                                        id="diseaseCode"
+                                        name="diseaseCode"
+                                        placeholder="Enter disease code"
+                                        th:value="${disease.diseaseCode}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.diseaseCode}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.diseaseCode')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3 text-white">
+                                <label class="form-label">Pathogen</label>
+                                <input
+                                        class="form-control"
+                                        id="pathogen"
+                                        name="pathogen"
+                                        placeholder="Enter pathogen"
+                                        th:value="${disease.pathogen}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.pathogen}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.pathogen')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3 text-white">
+                                <label class="form-label">Description</label>
+                                <input
+                                        class="form-control"
+                                        id="description"
+                                        name="description"
+                                        placeholder="Enter description"
+                                        th:value="${disease.description}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.description}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.description')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3 text-white">
+                                <label class="form-label">Disease type</label>
+                                <select
+                                        class="form-control"
+                                        id="id"
+                                        name="id"
+                                        th:value="${disease.id}">
+                                    <option th:value='1'>Animal-Transmitted</option>
+                                    <option th:value='2'>Bloodborne</option>
+                                    <option th:value='3'>Infectious</option>
+                                    <option th:value='4'>Bioterrorism-Related</option>
+                                    <option th:value='5'>Dementia</option>
+                                    <option th:value='6'>Travel-Related</option>
+                                    <option th:value='7'>Environmental</option>
+                                    <option th:value='8'>Deficiency</option>
+                                    <option th:value='9'>Hereditary</option>
+                                    <option th:value='10'>Physiological</option>
+                                </select>
+                                <p th:errors = "*{disease.id}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.id')}"></p>
+                            </div>
 
                             <div class="form-group mb-3 text-white">
                                 <label class="form-label">First encounter date</label>
@@ -88,24 +151,19 @@
                                     th:if="${#fields.hasErrors('discovery.first_enc_date')}"></p>
                             </div>
 
-                            <div class="form-group mb-3 text-white">
+                            <!-- <div class="form-group mb-3 text-white">
                                 <label class="form-label">Disease code</label>
-                                <select
+                                <input
                                         class="form-control"
                                         id="diseaseCode"
                                         name="diseaseCode"
+                                        placeholder="Enter disease code"
                                         th:value="${discovery.diseaseCode}"
                                         type="text"
-                                >
-                                    <option 
-                                        th:each="disease : ${diseases}"
-                                        th:value="${disease.diseaseCode}"
-                                        th:text="${disease.diseaseCode}"
-                                    ></option>
-                                </select>
+                                />
                                 <p th:errors = "${discovery.diseaseCode}" class="text-danger"
                                     th:if="${#fields.hasErrors('discovery.diseaseCode')}"></p>
-                            </div>
+                            </div> -->
 
                             <div class="form-group mb-3 text-white">
                                 <label class="form-label">Country</label>
