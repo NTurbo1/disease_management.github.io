@@ -47,7 +47,7 @@ public class RecordServiceImpl implements RecordService {
     private RecordDto mapToRecordDto(Record record){
         RecordDto recordDto = new RecordDto();
         recordDto.setCname(record.getCname());
-        recordDto.setDiseaseCode(record.getCname());
+        recordDto.setDiseaseCode(record.getDiseaseCode());
         recordDto.setEmail(record.getEmail());
         recordDto.setRecordId(record.getRecordId());
         recordDto.setTotal_deaths(record.getTotal_deaths());

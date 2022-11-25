@@ -9,9 +9,30 @@
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
+        <style>
+            #background-video {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+            }
+
+            @media (max-width: 750px) {
+                #background-video { display: none; }
+                body {
+                background: url("https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000") no-repeat;
+                background-size: cover;
+                }
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/}">Home</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,21 +50,30 @@
                 </div>
             </div>
         </nav>
+
+        <video id="background-video" autoplay loop muted poster="https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000">
+			<source src="https://joy.videvo.net/videvo_files/video/free/video0453/large_watermarked/_118__import_preview.mp4" type="video/mp4">
+		</video>
+
         <br /><br /><br />
         <div class="container">
             <div class="row col-md-8 offset-md-2">
-                <div class="card">
-                    <div class="card-header">
+                <div class="card"
+                style="background-color: rgba(0,0,0,.9);"
+            >
+                    <div class="card-header text-white">
                         <h2 class="text-center">New Record</h2>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"
+                         style="background-color: rgba(0,0,0,.3);"
+                    >
                         <form
                             method="post"
                             role="form"
                             th:action="@{/records/saveRecord}"
                         >
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-white">
                                 <label class="form-label">Country</label>
                                 <select
                                         class="form-control"
@@ -71,7 +101,7 @@
                                     th:if="${#fields.hasErrors('record.cname')}"></p>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-white">
                                 <label class="form-label">Email</label>
                                 <input
                                         class="form-control"
@@ -85,21 +115,26 @@
                                     th:if="${#fields.hasErrors('record.email')}"></p>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-white">
                                 <label class="form-label">Disease code</label>
-                                <input
-                                        class="form-control"
-                                        id="diseaseCode"
-                                        name="diseaseCode"
-                                        placeholder="Enter disease code"
-                                        th:value="${record.diseaseCode}"
-                                        type="text"
-                                />
+                                <select
+                                    class="form-control"
+                                    id="diseaseCode"
+                                    name="diseaseCode"
+                                    th:value="${record.diseaseCode}"
+                                    type="text"
+                                >
+                                    <option 
+                                        th:each="disease : ${diseases}"
+                                        th:value="${disease.diseaseCode}"
+                                        th:text="${disease.diseaseCode}"
+                                    ></option>
+                                </select>
                                 <p th:errors = "${record.diseaseCode}" class="text-danger"
                                     th:if="${#fields.hasErrors('record.diseaseCode')}"></p>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-white">
                                 <label class="form-label">Total patients</label>
                                 <input
                                         class="form-control"
@@ -113,7 +148,7 @@
                                     th:if="${#fields.hasErrors('record.total_patients')}"></p>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-white">
                                 <label class="form-label">Total deaths</label>
                                 <input
                                         class="form-control"

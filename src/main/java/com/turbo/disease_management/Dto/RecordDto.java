@@ -2,18 +2,22 @@ package com.turbo.disease_management.Dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class RecordDto {
-    @NotEmpty(message = "Id should not be empty")
     private Integer recordId;
     @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
-    @NotEmpty(message = "Country name should not be empty")
     private String cname;
     @NotEmpty(message = "Disease code should not be empty")
     private String diseaseCode;
+    @Size(min = 1, message = "This entry should not be empty")
+    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Enter a natural number")
     private String total_deaths;
+    @Size(min = 1, message = "This entry should not be empty")
+    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Enter a natural number")
     private String total_patients;
     
     public Integer getRecordId() {

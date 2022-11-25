@@ -7,9 +7,30 @@
                 rel="stylesheet"
                 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
                 crossorigin="anonymous">
+        <style>
+            #background-video {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+            }
+
+            @media (max-width: 750px) {
+                #background-video { display: none; }
+                body {
+                background: url("https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000") no-repeat;
+                background-size: cover;
+                }
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/}">Home</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,13 +48,19 @@
                 </div>
             </div>
         </nav>
+
+        <video id="background-video" autoplay loop muted poster="https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000">
+			<source src="https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rsUQQw39cl52esufb/videoblocks-floating-virus-cells-2022-08-04-08-22-14-utc_r_y1uxwis__63d785be3a209b382a90ad43e79ec61c__P360.mp4" type="video/mp4">
+		</video>
+
         <div class="container">
-            <div class="row col-md-10">
-                <h2>List of Diseases</h2>
+            <div class="row text-white">
+                <h2 class="text-center">List of Diseases</h2>
             </div>
             <a th:href="@{/diseases/addDisease}" class="btn btn-primary">Add Disease</a>
         </br></br>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover text-white" 
+                   style="background-color: rgba(0,0,0,.9);">
                 <thead>
                     <tr>
                         <th>disease code</th>

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class Record {
     @Id
     @GeneratedValue
-    @Column(name = "recordId", nullable = false)
+    @Column(name = "record_id", nullable = false)
     private Integer recordId;
     @Column(name = "email", nullable = false)
     private String email;

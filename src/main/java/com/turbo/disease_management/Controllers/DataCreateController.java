@@ -19,6 +19,7 @@ import com.turbo.disease_management.Dto.RecordDto;
 import com.turbo.disease_management.Service.DiscoverService;
 import com.turbo.disease_management.Service.DiseaseService;
 import com.turbo.disease_management.Service.RecordService;
+import com.turbo.disease_management.Service.UserService;
 
 @Controller
 public class DataCreateController {
@@ -32,17 +33,36 @@ public class DataCreateController {
     @Autowired
     private DiscoverService discoverService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/records/newRecord")
     public String newRecord(Model model) {
         RecordDto record = new RecordDto();
+        List<DiseaseDto> diseases = diseaseService.findAllDiseases();
         model.addAttribute("record", record);
+        model.addAttribute("diseases", diseases);
+        
         return "new_record";
     }
 
     @PostMapping("/records/saveRecord")
-    public String saveRecord(@ModelAttribute(value = "record") RecordDto record) {
+    public String saveRecord(@Valid @ModelAttribute(value = "record") RecordDto record,
+                             BindingResult result, 
+                             @ModelAttribute(value="diseases") DiscoverDto diseases,
+                             Model model) {
+
+        if (result.hasErrors()){
+            //List<DiseaseDto> diseases = diseaseService.findAllDiseases();
+            model.addAttribute("record", record);
+            model.addAttribute("diseases", diseases);
+            return "new_record";
+        }
+
+        System.out.println("SAVING A NEW RECORD WITH DISEASE CODE: " + record.getDiseaseCode()
+                            + "\nAND COUNTRY NAME: " + record.getCname());
         recordService.saveRecord(record);
-        return "redirect:/records";
+        return "records";
     }
 
     @GetMapping("/records/deleteRecord/{recordId}")
@@ -93,11 +113,19 @@ public class DataCreateController {
                                 BindingResult result, Model model) {
 
         if (result.hasErrors()){
+            List<DiseaseDto> diseases = diseaseService.findAllDiseases();
+            model.addAttribute("diseases", diseases);
             model.addAttribute("discovery", discovery);
             return "new_discovery";
         }
 
         discoverService.saveDiscovery(discovery);
         return "redirect:/discoveries";
+    }
+
+    @GetMapping("/users/deleteUser/{email}")
+    public String deleteUser(@PathVariable(value = "email", required = false) String email) {
+        userService.deleteUserByEmail(email);
+        return "redirect:/users";
     }
 }

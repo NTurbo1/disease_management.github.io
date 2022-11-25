@@ -64,9 +64,9 @@ public class AuthController {
     @GetMapping("/register/occupation")
     public String redirectBasedOnOccupation(@Valid @ModelAttribute("user") UserDto user,
                                             BindingResult result,
-                                            Model model,
-                                            @RequestParam(value="occupation", required = false)
-                                            String occupation) {
+                                            Model model
+                                            /*@RequestParam(value="occupation", required = false)
+                                            String occupation*/) {
         User existingUser = userService.findUserByEmail(user.getEmail());
 
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
@@ -78,6 +78,8 @@ public class AuthController {
             model.addAttribute("user", user);
             return "/register";
         }
+
+        String occupation = user.getOccupation();
 
         if (occupation.equals("doctor")) {
             System.out.println("Heading to /register/doctor");

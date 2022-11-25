@@ -7,9 +7,30 @@
                 rel="stylesheet"
                 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
                 crossorigin="anonymous">
+        <style>
+            #background-video {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+            }
+
+            @media (max-width: 750px) {
+                #background-video { display: none; }
+                body {
+                background: url("https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000") no-repeat;
+                background-size: cover;
+                }
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/}">Home</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,13 +45,19 @@
                 </div>
             </div>
         </nav>
+
+        <video id="background-video" autoplay loop muted poster="https://img.freepik.com/premium-photo/abstract-dark-background-with-moving-lines-dots-with-triangles-concept-big-data-network-connection-internet-connection-worldwide-3d-rendering_710001-17.jpg?w=2000">
+			<source src="https://joy.videvo.net/videvo_files/video/free/2020-02/large_watermarked/200129_02_Medical_Ward_4k_084_preview.mp4" type="video/mp4">
+		</video>
+
         <div class="container">
             <div class="row col-md-10">
-                <h2>Disease Records</h2>
+                <h2 class="text-center">Disease Records</h2>
             </div>
             <a class="btn btn-primary" th:href="@{/records/newRecord}">Add Record</a>
         </br></br>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover text-white"
+                   style="background-color: rgba(0,0,0,.9);">
                 <thead>
                     <tr>
                         <th>Record Id</th>
@@ -39,6 +66,7 @@
                         <th>Country name</th>
                         <th>Total deaths</th>
                         <th>Total patients</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
