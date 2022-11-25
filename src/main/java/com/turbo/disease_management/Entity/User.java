@@ -18,18 +18,19 @@ import javax.persistence.Table;
 @Table(name="Users")
 public class User {
 	@Id
+	@Column(name = "email", nullable = false)
 	private String email;
-	@Column(nullable=false)
+	@Column(name="name", nullable=false)
 	private String name;
-	@Column(nullable=false)
+	@Column(name="surname", nullable=false)
 	private String surname;
-	@Column(nullable=false)
+	@Column(name="salary", nullable=false)
 	private BigInteger salary;
-	@Column(nullable=false)
+	@Column(name="phone", nullable=false)
 	private String phone;
-	@Column(nullable=false)
+	@Column(name="cname", nullable=false)
 	private String cname;
-	@Column(nullable=false)
+	@Column(name="password", nullable=false)
     private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

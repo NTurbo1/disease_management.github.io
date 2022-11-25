@@ -47,10 +47,15 @@ public class UserServiceImpl implements UserService {
             if(role == null){
                 role = checkRoleExist("ROLE_DOCTOR");
             }
-        } else {
+        } else if (userDto.getOccupation().equals("publicServant")) {
             role = roleRepository.findByName("ROLE_PUBLICSERVANT");
             if(role == null){
                 role = checkRoleExist("ROLE_PUBLICSERVANT");
+            }
+        } else {
+            role = roleRepository.findByName("ROLE_ADMIN");
+            if(role == null){
+                role = checkRoleExist("ROLE_ADMIN");
             }
         }
 

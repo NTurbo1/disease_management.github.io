@@ -54,5 +54,11 @@ public class RecordServiceImpl implements RecordService {
         recordDto.setTotal_patients(record.getTotal_patients());
         return recordDto;
     }
+
+    @Override
+    public void deleteRecordById(Integer recordId) {
+
+        recordRepository.deleteById(recordId);
+    }
     
 }

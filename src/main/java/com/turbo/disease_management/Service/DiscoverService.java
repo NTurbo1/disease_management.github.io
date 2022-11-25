@@ -11,4 +11,6 @@ public interface DiscoverService {
 	public Discover findDiscoveryByDiseaseCode(String diseaseCode);
 	
 	public List<DiscoverDto> findAllDiscoveries();
+
+	public void deleteDiscoveryByDiseaseCode(String diseaseCode);
 }

@@ -3,6 +3,8 @@ package com.turbo.disease_management.Dto;
 import java.math.BigInteger;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 public class UserDto {
@@ -13,6 +15,8 @@ public class UserDto {
     private String name;
     @NotEmpty
     private String surname;
+	@Min(value = 10000000, message = "You are too poor to work here")
+	@Max(value = 1000000000, message = "You are too rich to work here")
 	private BigInteger salary;
     @NotEmpty
 	private String phone;
@@ -70,12 +74,6 @@ public class UserDto {
 	}
 	public void setOccupation(String occupation) {
 		this.occupation = occupation;
-	}
-    
-	@Override
-	public String toString() {
-		return "UserDto [email=" + email + ", name=" + name + ", surname=" + surname + ", salary=" + salary + ", phone="
-				+ phone + ", cname=" + cname + ", password=" + password + ", occupation=" + occupation + "]";
 	}
     
 }

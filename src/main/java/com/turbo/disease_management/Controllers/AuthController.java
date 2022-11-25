@@ -1,8 +1,6 @@
 package com.turbo.disease_management.Controllers;
 
 import java.math.BigInteger;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.turbo.disease_management.Dto.DiseaseDto;
 import com.turbo.disease_management.Dto.DoctorDto;
 import com.turbo.disease_management.Dto.PublicServantDto;
-import com.turbo.disease_management.Dto.RecordDto;
 import com.turbo.disease_management.Dto.SpecializeDto;
 import com.turbo.disease_management.Dto.UserDto;
 import com.turbo.disease_management.Entity.PublicServant;
 import com.turbo.disease_management.Entity.User;
-import com.turbo.disease_management.Service.DiseaseService;
 import com.turbo.disease_management.Service.DoctorService;
 import com.turbo.disease_management.Service.PublicServantService;
-import com.turbo.disease_management.Service.RecordService;
 import com.turbo.disease_management.Service.SpecializeService;
 import com.turbo.disease_management.Service.UserService;
 
@@ -42,12 +36,6 @@ public class AuthController {
     @Autowired
     private SpecializeService specializeService;
 
-    @Autowired
-    private DiseaseService diseaseService;
-
-    @Autowired
-    private RecordService recordService;
-
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -62,36 +50,6 @@ public class AuthController {
     @GetMapping("/login")
     public String login(){
         return "login";
-    }
-
-    // handler method to handle list of users
-    @GetMapping("/users")
-    public String users(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
-
-    @GetMapping("/diseases")
-    public String diseases(Model model) {
-        List<DiseaseDto> diseases = diseaseService.findAllDiseases();
-        System.out.println("USERS BEFORE GETTING DISPLAYED");
-        for (DiseaseDto d : diseases) {
-            System.out.println(d.toString());
-        }
-        model.addAttribute("diseases", diseases);
-        return "diseases";
-    }
-
-    @GetMapping("/records")
-    public String records(Model model) {
-        List<RecordDto> records = recordService.findAllRecords();
-        System.out.println("RECORDS BEFORE GETTING DISPLAYED");
-        for (RecordDto r : records) {
-            System.out.println(r.toString());
-        }
-        model.addAttribute("records", records);
-        return "records";
     }
     
     // handler method to handle user registration form request
@@ -132,7 +90,7 @@ public class AuthController {
                                               "&salary=" + user.getSalary() +
                                               "&password=" + user.getPassword() +
                                               "&occupation=" + occupation;
-        } else {
+        } else if (occupation.equals("publicServant")) {
             return "redirect:/register/publicServant?name=" + user.getName() +
                                               "&surname=" + user.getSurname() +
                                               "&email=" + user.getEmail() +
@@ -141,6 +99,9 @@ public class AuthController {
                                               "&salary=" + user.getSalary() +
                                               "&password=" + user.getPassword() +
                                               "&occupation=" + occupation;
+        } else {
+            userService.saveUser(user);
+            return "redirect:/register?success";
         }
     }
     
@@ -257,5 +218,29 @@ public class AuthController {
         publicServantService.savePublicServant(publicServant);
         return "redirect:/register?success";
     }
+
+    // @GetMapping("/register/admin")
+    // public String adminRegistration(@RequestParam(value="name", required=false) String name,
+    //                                 @RequestParam(value="surname", required=false) String surname,
+    //                                 @RequestParam(value="email", required=false) String email,
+    //                                 @RequestParam(value="phone", required=false) String phone,
+    //                                 @RequestParam(value="cname", required=false) String cname,
+    //                                 @RequestParam(value="salary", required=false) BigInteger salary,
+    //                                 @RequestParam(value="password", required=false) String password,
+    //                                 @RequestParam(value="occupation", required=false) String occupation) {
+        
+    //     UserDto user = new UserDto();
+    //     user.setName(name);
+    //     user.setSurname(surname);
+    //     user.setEmail(email);
+    //     user.setPhone(phone);
+    //     user.setCname(cname);
+    //     user.setSalary(salary);
+    //     user.setPassword(password);
+    //     user.setOccupation(occupation);
+
+    //     userService.saveUser(user);
+    //     return "redirect:/register?success";
+    // }
 
 }

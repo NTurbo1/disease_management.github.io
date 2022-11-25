@@ -138,6 +138,7 @@
                                         th:value="${user.occupation}">
                                     <option th:value='doctor'>Doctor</option>
                                     <option th:value='publicServant'>Public Servant</option>
+                                    <option th:value='admin'>Admin</option>
                                 </select>
                                 <p th:errors = "${user.occupation}" class="text-danger"
                                     th:if="${#fields.hasErrors('user.occupation')}"></p>

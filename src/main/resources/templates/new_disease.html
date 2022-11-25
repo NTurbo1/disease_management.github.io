@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+    <head>
+        <meta charset="UTF-8">
+        <title>Disease Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/diseases}">Diseases</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br /><br /><br />
+        <div class="container">
+            <div class="row col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">New Disease</h2>
+                    </div>
+                    <div class="card-body">
+                        <form
+                            method="post"
+                            role="form"
+                            th:action="@{/diseases/saveDisease}"
+                        >
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Disease code</label>
+                                <input
+                                        class="form-control"
+                                        id="diseaseCode"
+                                        name="diseaseCode"
+                                        placeholder="Enter disease code"
+                                        th:value="${disease.diseaseCode}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.diseaseCode}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.diseaseCode')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Pathogen</label>
+                                <input
+                                        class="form-control"
+                                        id="pathogen"
+                                        name="pathogen"
+                                        placeholder="Enter pathogen"
+                                        th:value="${disease.pathogen}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.pathogen}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.pathogen')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Description</label>
+                                <input
+                                        class="form-control"
+                                        id="description"
+                                        name="description"
+                                        placeholder="Enter description"
+                                        th:value="${disease.description}"
+                                        type="text"
+                                />
+                                <p th:errors = "${disease.description}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.description')}"></p>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Disease type</label>
+                                <select
+                                        class="form-control"
+                                        id="id"
+                                        name="id"
+                                        th:value="${disease.id}">
+                                    <option th:value='1'>Animal-Transmitted</option>
+                                    <option th:value='2'>Bloodborne</option>
+                                    <option th:value='3'>Infectious</option>
+                                    <option th:value='4'>Bioterrorism-Related</option>
+                                    <option th:value='5'>Dementia</option>
+                                    <option th:value='6'>Travel-Related</option>
+                                    <option th:value='7'>Environmental</option>
+                                    <option th:value='8'>Deficiency</option>
+                                    <option th:value='9'>Hereditary</option>
+                                    <option th:value='10'>Physiological</option>
+                                </select>
+                                <p th:errors = "*{disease.id}" class="text-danger"
+                                    th:if="${#fields.hasErrors('disease.id')}"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

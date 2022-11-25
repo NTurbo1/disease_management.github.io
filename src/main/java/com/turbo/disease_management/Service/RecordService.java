@@ -10,4 +10,6 @@ public interface RecordService {
 	public com.turbo.disease_management.Entity.Record findRecordByRecordId(Integer recordId);
 	
 	public List<RecordDto> findAllRecords();
+
+    public void deleteRecordById(Integer recordId);
 }

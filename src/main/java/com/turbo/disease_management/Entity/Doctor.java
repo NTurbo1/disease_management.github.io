@@ -1,5 +1,6 @@
 package com.turbo.disease_management.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,8 +9,11 @@ import javax.persistence.Table;
 @Table(name="Doctor")
 public class Doctor {
 	@Id
+	@Column(name = "email", nullable = false)
 	private String email;
+	@Column(name = "degree", nullable = false)
 	private String degree;
+	
 	public String getEmail() {
 		return email;
 	}

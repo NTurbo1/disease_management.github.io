@@ -1,5 +1,6 @@
 package com.turbo.disease_management.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,11 +11,17 @@ import javax.persistence.Table;
 public class Record {
     @Id
     @GeneratedValue
+    @Column(name = "recordId", nullable = false)
     private Integer recordId;
+    @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "cname", nullable = false)
     private String cname;
+    @Column(name = "disease_code", nullable = false)
     private String diseaseCode;
+    @Column(name = "total_deaths", nullable = false)
     private String total_deaths;
+    @Column(name = "total_patients", nullable = false)
     private String total_patients;
 
     public Integer getRecordId() {

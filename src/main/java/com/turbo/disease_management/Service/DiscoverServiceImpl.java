@@ -47,4 +47,10 @@ public class DiscoverServiceImpl implements DiscoverService {
         discoverDto.setFirst_enc_date(discover.getFirst_enc_date());
         return discoverDto;
     }
+
+    @Override
+    public void deleteDiscoveryByDiseaseCode(String diseaseCode) {
+
+        discoverRepository.deleteById(diseaseCode);
+    }
 }

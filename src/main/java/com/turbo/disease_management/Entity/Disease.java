@@ -1,5 +1,6 @@
 package com.turbo.disease_management.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,9 +9,13 @@ import javax.persistence.Table;
 @Table(name="Disease")
 public class Disease {
     @Id
+    @Column(name="disease_code", nullable=false)
     private String diseaseCode;
+    @Column(name="pathogen", nullable=false)
     private String pathogen;
+    @Column(name="description", nullable=false)
     private String description;
+    @Column(name="id", nullable=false)
     private Integer id;
 
     public String getPathogen() {

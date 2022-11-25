@@ -18,9 +18,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" th:href="@{/records/newRecord}">Add Record</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                         </li>
                     </ul>
@@ -31,9 +28,12 @@
             <div class="row col-md-10">
                 <h2>Disease Records</h2>
             </div>
+            <a class="btn btn-primary" th:href="@{/records/newRecord}">Add Record</a>
+        </br></br>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th>Record Id</th>
                         <th>Disease code</th>
                         <th>Email</th>
                         <th>Country name</th>
@@ -43,11 +43,15 @@
                 </thead>
                 <tbody>
                     <tr th:each="record : ${records}">
+                        <td th:text="${record.recordId}"></td>
                         <td th:text="${record.diseaseCode}"></td>
                         <td th:text="${record.email}"></td>
                         <td th:text="${record.cname}"></td>
                         <td th:text="${record.total_deaths}"></td>
                         <td th:text="${record.total_patients}"></td>
+                        <td> 
+                            <a th:href="@{/records/deleteRecord/{recordId}(recordId=${record.recordId})}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
