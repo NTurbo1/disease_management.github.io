@@ -50,4 +50,9 @@ public class DiseaseServiceImpl implements DiseaseService {
         diseaseDto.setPathogen(disease.getPathogen());
         return diseaseDto;
     }
+
+    @Override
+    public void deleteDiseaseByDiseaseCode(String diseaseCode) {
+        diseaseRepository.deleteById(diseaseCode);
+    }
 }

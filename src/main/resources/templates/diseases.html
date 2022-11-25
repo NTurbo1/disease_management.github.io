@@ -67,6 +67,7 @@
                         <th>pathogen</th>
                         <th>description</th>
                         <th>id</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +76,9 @@
                         <td th:text="${disease.pathogen}"></td>
                         <td th:text="${disease.description}"></td>
                         <td th:text="${disease.id}"></td>
+                        <td>
+                            <a th:href="@{/diseases/deleteDisease/{diseaseCode}(diseaseCode=${disease.diseaseCode})}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

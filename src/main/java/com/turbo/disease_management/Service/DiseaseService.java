@@ -11,4 +11,6 @@ public interface DiseaseService {
 	public Disease findDiseaseByDiseaseCode(String diseaseCode);
 	
 	public List<DiseaseDto> findAllDiseases();
+
+	public void deleteDiseaseByDiseaseCode(String diseaseCode);
 }

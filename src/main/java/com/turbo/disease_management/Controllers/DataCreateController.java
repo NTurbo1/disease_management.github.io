@@ -92,9 +92,16 @@ public class DataCreateController {
         return "redirect:/diseases";
     }
 
+    @GetMapping("/diseases/deleteDisease/{diseaseCode}")
+    public String deleteDisease(@PathVariable(value="diseaseCode", required = false) String diseaseCode){
+        diseaseService.deleteDiseaseByDiseaseCode(diseaseCode);
+        return "redirect:/diseases";
+    }
+
     @GetMapping("/discoveries/deleteDiscovery/{diseaseCode}")
     public String deleteDiscovery(@PathVariable(value="diseaseCode", required = false) String diseaseCode){
         discoverService.deleteDiscoveryByDiseaseCode(diseaseCode);
+        diseaseService.deleteDiseaseByDiseaseCode(diseaseCode);
         return "redirect:/discoveries";
     }
 
@@ -116,7 +123,7 @@ public class DataCreateController {
                                 Model model) {
 
         discovery.setDiseaseCode(disease.getDiseaseCode());
-        
+
         if (diseaseResult.hasErrors()){
             model.addAttribute("disease", disease);
             model.addAttribute("discovery", discovery);
