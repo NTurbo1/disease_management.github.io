@@ -20,6 +20,7 @@ import com.turbo.disease_management.Service.DiscoverService;
 import com.turbo.disease_management.Service.DiseaseService;
 import com.turbo.disease_management.Service.RecordService;
 import com.turbo.disease_management.Service.UserService;
+import com.turbo.disease_management.Entity.Record;
 
 @Controller
 public class DataCreateController {
@@ -59,15 +60,13 @@ public class DataCreateController {
             return "new_record";
         }
 
-        System.out.println("SAVING A NEW RECORD WITH DISEASE CODE: " + record.getDiseaseCode()
-                            + "\nAND COUNTRY NAME: " + record.getCname());
         recordService.saveRecord(record);
-        return "records";
+        return "redirect:/records";
     }
 
-    @GetMapping("/records/deleteRecord/{recordId}")
-    public String deleteRecord(@PathVariable(value = "recordId", required = false) Integer recordId) {
-        recordService.deleteRecordById(recordId);
+    @GetMapping("/records/deleteRecord/{diseaseCode}")
+    public String deleteRecord(@PathVariable(value = "diseaseCode", required = false) String diseaseCode) {
+        recordService.deleteRecordByDiseaseCode(diseaseCode);
         return "redirect:/records";
     }
 

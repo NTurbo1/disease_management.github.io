@@ -2,21 +2,21 @@ package com.turbo.disease_management.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Record")
 public class Record {
-    @Id
-    @GeneratedValue
-    @Column(name = "record_id", nullable = false)
-    private Integer recordId;
+    // @Id
+    // @GeneratedValue
+    // @Column(name = "record_id", nullable = false)
+    // private Integer recordId;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "cname", nullable = false)
     private String cname;
+    @Id
     @Column(name = "disease_code", nullable = false)
     private String diseaseCode;
     @Column(name = "total_deaths", nullable = false)
@@ -24,12 +24,12 @@ public class Record {
     @Column(name = "total_patients", nullable = false)
     private String total_patients;
 
-    public Integer getRecordId() {
-        return recordId;
-    }
-    public void setRecordId(Integer recordId) {
-        this.recordId = recordId;
-    }
+    // public Integer getRecordId() {
+    //     return recordId;
+    // }
+    // public void setRecordId(Integer recordId) {
+    //     this.recordId = recordId;
+    // }
     public String getEmail() {
         return email;
     }

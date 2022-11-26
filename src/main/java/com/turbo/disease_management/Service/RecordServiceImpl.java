@@ -13,7 +13,7 @@ import com.turbo.disease_management.Entity.Record;
 public class RecordServiceImpl implements RecordService {
 
     private RecordRepository recordRepository;
-    
+
     public RecordServiceImpl(RecordRepository recordRepository) {
         this.recordRepository = recordRepository;
     }
@@ -24,7 +24,7 @@ public class RecordServiceImpl implements RecordService {
         record.setCname(recordDto.getCname());
         record.setDiseaseCode(recordDto.getDiseaseCode());
         record.setEmail(recordDto.getEmail());
-        record.setRecordId(recordDto.getRecordId());
+        //record.setRecordId(recordDto.getRecordId());
         record.setTotal_deaths(recordDto.getTotal_deaths());
         record.setTotal_patients(recordDto.getTotal_patients());
 
@@ -32,8 +32,8 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record findRecordByRecordId(Integer recordId) {
-        return recordRepository.findByRecordId(recordId);
+    public Record findRecordByDiseaseCode(String diseaseCode) {
+        return recordRepository.findByDiseaseCode(diseaseCode);
     }
 
     @Override
@@ -49,16 +49,16 @@ public class RecordServiceImpl implements RecordService {
         recordDto.setCname(record.getCname());
         recordDto.setDiseaseCode(record.getDiseaseCode());
         recordDto.setEmail(record.getEmail());
-        recordDto.setRecordId(record.getRecordId());
+        //recordDto.setRecordId(record.getRecordId());
         recordDto.setTotal_deaths(record.getTotal_deaths());
         recordDto.setTotal_patients(record.getTotal_patients());
         return recordDto;
     }
 
     @Override
-    public void deleteRecordById(Integer recordId) {
+    public void deleteRecordByDiseaseCode(String diseaseCode) {
 
-        recordRepository.deleteById(recordId);
+        recordRepository.deleteById(diseaseCode);
     }
     
 }

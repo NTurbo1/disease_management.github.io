@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class RecordDto {
-    private Integer recordId;
+    //private Integer recordId;
     @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
@@ -20,12 +20,12 @@ public class RecordDto {
     @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Enter a natural number")
     private String total_patients;
     
-    public Integer getRecordId() {
-        return recordId;
-    }
-    public void setRecordId(Integer recordId) {
-        this.recordId = recordId;
-    }
+    // public Integer getRecordId() {
+    //     return recordId;
+    // }
+    // public void setRecordId(Integer recordId) {
+    //     this.recordId = recordId;
+    // }
     public String getEmail() {
         return email;
     }

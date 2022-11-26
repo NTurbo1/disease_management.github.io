@@ -60,10 +60,6 @@ public class DataReadController {
     @GetMapping("/records")
     public String records(Model model) {
         List<RecordDto> records = recordService.findAllRecords();
-        System.out.println("RECORDS BEFORE GETTING DISPLAYED");
-        for (RecordDto r : records) {
-            System.out.println(r.toString());
-        }
         model.addAttribute("records", records);
         return "records";
     }
