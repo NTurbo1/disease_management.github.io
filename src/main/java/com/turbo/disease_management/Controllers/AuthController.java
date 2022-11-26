@@ -64,9 +64,7 @@ public class AuthController {
     @GetMapping("/register/occupation")
     public String redirectBasedOnOccupation(@Valid @ModelAttribute("user") UserDto user,
                                             BindingResult result,
-                                            Model model
-                                            /*@RequestParam(value="occupation", required = false)
-                                            String occupation*/) {
+                                            Model model) {
         User existingUser = userService.findUserByEmail(user.getEmail());
 
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
@@ -82,8 +80,6 @@ public class AuthController {
         String occupation = user.getOccupation();
 
         if (occupation.equals("doctor")) {
-            System.out.println("Heading to /register/doctor");
-            System.out.println("USER PASSWORD " + user.getPassword());
             return "redirect:/register/doctor?name=" + user.getName() +
                                               "&surname=" + user.getSurname() +
                                               "&email=" + user.getEmail() +
@@ -130,7 +126,6 @@ public class AuthController {
         user.setPassword(password);
         user.setOccupation(occupation);
 
-        System.out.println("In /register/doctor");
         model.addAttribute("doctor", doctor);
         model.addAttribute("specialize", specialize);
         model.addAttribute("user", user);
@@ -220,29 +215,5 @@ public class AuthController {
         publicServantService.savePublicServant(publicServant);
         return "redirect:/register?success";
     }
-
-    // @GetMapping("/register/admin")
-    // public String adminRegistration(@RequestParam(value="name", required=false) String name,
-    //                                 @RequestParam(value="surname", required=false) String surname,
-    //                                 @RequestParam(value="email", required=false) String email,
-    //                                 @RequestParam(value="phone", required=false) String phone,
-    //                                 @RequestParam(value="cname", required=false) String cname,
-    //                                 @RequestParam(value="salary", required=false) BigInteger salary,
-    //                                 @RequestParam(value="password", required=false) String password,
-    //                                 @RequestParam(value="occupation", required=false) String occupation) {
-        
-    //     UserDto user = new UserDto();
-    //     user.setName(name);
-    //     user.setSurname(surname);
-    //     user.setEmail(email);
-    //     user.setPhone(phone);
-    //     user.setCname(cname);
-    //     user.setSalary(salary);
-    //     user.setPassword(password);
-    //     user.setOccupation(occupation);
-
-    //     userService.saveUser(user);
-    //     return "redirect:/register?success";
-    // }
 
 }

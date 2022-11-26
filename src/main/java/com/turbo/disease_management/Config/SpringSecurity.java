@@ -31,8 +31,6 @@ public class SpringSecurity {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
-                // .antMatchers("/register/doctor/**").hasRole("DOCTOR")
-                // .antMatchers("/register/publicServant/**").hasRole("PUBLICSERVANT")
                 .antMatchers("/").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers("/diseases/**").hasRole("DOCTOR")
@@ -43,7 +41,6 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                //.defaultSuccessUrl("/afterLogin")
                                 .successHandler(myAuthenticationSuccessHandler())
                                 .permitAll()
                 ).logout(
